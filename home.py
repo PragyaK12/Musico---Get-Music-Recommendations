@@ -24,8 +24,8 @@ def home_page():
     with col1:
         st.title("Welcome to Musico :)")
         st.text("Musico lets you discover new music")
-        st.text("Get recommendations based on your spotify playlist")
-        st.text("Don't Have a Spotify Account? Don't worry ,")
+        st.text("Get recommendations based on any spotify playlist")
+        st.text("Or")
         st.text("Tell us your favourite genre and tune the audio features")
         st.text("Or just tell us your favourite song ;)")
     with col2:

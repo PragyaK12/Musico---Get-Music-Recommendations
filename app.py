@@ -25,6 +25,8 @@ st.set_page_config(
      layout="wide",
      menu_items={}
     )
+
+
 with st.sidebar:
     # navigation bar
     curr_page = option_menu(

@@ -12,6 +12,7 @@ from datetime import datetime
 
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics.pairwise import cosine_similarity
+import streamlit as st
 
 # importing database 
 df=pd.read_csv('SpotifyFeatures.csv')
@@ -49,46 +50,29 @@ spotify_features_df = spotify_features_df.drop('time_signature', axis = 1)
 spotify_features_df = spotify_features_df.join(genre_OHE)
 spotify_features_df = spotify_features_df.join(key_OHE)
 
-
-#client_id = '69af2951bd214eb79c214240c17aabc9' 
-#client_secret= 'b5c29e0a0925498388191b7a4eaa1401'
-
-#Fetching the playlist
-#scope = 'user-library-read'
-#token = util.prompt_for_user_token(
- #   scope, 
-  #  client_id= client_id, 
-   # client_secret=client_secret, 
-    #redirect_uri='http://localhost:8881/callback'
-  #)
-#sp = spotipy.Spotify(auth=token)
-#playlist_dic = {}
-#playlist_cover_art = {}
-
-#for i in sp.current_user_playlists()['items']:
- #   playlist_dic[i['name']] = i['uri'].split(':')[2]
-  #  playlist_cover_art[i['uri'].split(':')[2]] = i['images'][0]['url']
-
-
-
 #creating the playlist dataframe with extended features using Spotify data
-def generate_playlist_df(playlist_name, playlist_dic, spotify_data,sp):
+
+
+def generate_playlist_df(spotify_data,playlist_id=None):
     
     playlist = pd.DataFrame()
+    client_id = '69af2951bd214eb79c214240c17aabc9' 
+    client_secret= 'b5c29e0a0925498388191b7a4eaa1401'
+    sp = spotipy.Spotify(client_credentials_manager = SpotifyClientCredentials(client_id=client_id,client_secret=client_secret))
 
-    for i, j in enumerate(sp.playlist(playlist_dic[playlist_name])['tracks']['items']):
-        playlist.loc[i, 'artist'] = j['track']['artists'][0]['name']
-        playlist.loc[i, 'track_name'] = j['track']['name']
-        playlist.loc[i, 'track_id'] = j['track']['id']
-        playlist.loc[i, 'url'] = j['track']['album']['images'][1]['url']
-        playlist.loc[i, 'date_added'] = j['added_at']
+    if (st.session_state.playlist_link_input == True):
+      for i, j in enumerate(sp.playlist(playlist_id)['tracks']['items']):
+          playlist.loc[i, 'artist'] = j['track']['artists'][0]['name']
+          playlist.loc[i, 'track_name'] = j['track']['name']
+          playlist.loc[i, 'track_id'] = j['track']['id']
+          playlist.loc[i, 'url'] = j['track']['album']['images'][1]['url']
+          playlist.loc[i, 'date_added'] = j['added_at']
 
     playlist['date_added'] = pd.to_datetime(playlist['date_added'])  
     
     playlist = playlist[playlist['track_id'].isin(spotify_data['track_id'].values)].sort_values('date_added',ascending = False)
 
-    return playlist
-
+    return playlist ,sp
 
 def generate_playlist_vector(spotify_features, playlist_df, weight_factor):
     
