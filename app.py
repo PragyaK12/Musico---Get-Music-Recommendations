@@ -30,8 +30,8 @@ st.set_page_config(
 with st.sidebar:
     # navigation bar
     curr_page = option_menu(
-        menu_title=None, 
-        options=["Home", "Link My Spotify Playlists", "I'll tell my favourite genre","I'll Tell My Fvourite Song"], 
+        menu_title="Recommend For", 
+        options=["Home", "Spotify Playlist", "Favourite Genre","Favourite Song"], 
         icons=[ "house"], 
         default_index=0, 
         )
@@ -46,14 +46,14 @@ if (curr_page=="Home"):
     home_page()
 
 
-if (curr_page=="Link My Spotify Playlists"):
+if (curr_page=="Spotify Playlist"):
     st.session_state.curr_page="Spotify_Playlist"
     spotify_playlist_page()
 
-if (curr_page=="I'll tell my favourite genre"):
+if (curr_page=="Favourite Genre"):
     st.session_state.curr_page="Genre_Based"
     genre_based()
     
 
-if (curr_page=="I'll Tell My Fvourite Song"):
+if (curr_page=="Favourite Song"):
     fav_song_page()

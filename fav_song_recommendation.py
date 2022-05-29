@@ -69,7 +69,7 @@ def display_recommendations(recommendation_ids):
 # streamlit webpage 
 def fav_song_page():
     st.title("Get More of that One Song You Like")
-    song_name=st.text_input('Enter song name')
+    song_name=st.text_input('Enter Song Name')
     if (song_name):
         recommendations=get_recommendations_spotify(song_name)
         recommendation_ids=get_ids(recommendations)
