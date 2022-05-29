@@ -34,14 +34,14 @@ def get_playlist_id_from_url(playlist_url):
 
 # web page 
 def spotify_playlist_page():
-    song_dataset = pd.read_csv('SpotifyFeatures.csv')
+    song_dataset = pd.read_csv('data/SpotifyFeatures.csv')
     #st.title('Get Recommendations for Your Spotify Playlist')
     st.title('Get Recommendations for any Spotify Playlist')
     playlist_url = st.text_input("Enter Playlist Url")
     with st.expander("Here's how to find any Playlist url in Spotify"):
         st.text("Right click on the playlist you like")
         st.text("Go to : Share -> Copy Link to Playlist")
-        image=Image.open("how_to_get_url.png")
+        image=Image.open("images/how_to_get_url.png")
         st.image(image)
 
     if "get_recommendation" not in st.session_state:

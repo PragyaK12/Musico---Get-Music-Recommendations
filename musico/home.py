@@ -29,7 +29,7 @@ def home_page():
         st.text("Tell us your favourite genre and tune the audio features")
         st.text("Or just tell us your favourite song ;)")
     with col2:
-        image = Image.open('musicNote.png')
+        image = Image.open('images/musicNote.png')
         st.image(image)
     
 

@@ -15,7 +15,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 import streamlit as st
 
 # importing database 
-df=pd.read_csv('SpotifyFeatures.csv')
+df=pd.read_csv('data/SpotifyFeatures.csv')
 
 # preprocessing 
 spotify_features_df = df
@@ -52,7 +52,6 @@ spotify_features_df = spotify_features_df.join(key_OHE)
 
 #creating the playlist dataframe with extended features using Spotify data
 
-
 def generate_playlist_df(spotify_data,playlist_id=None):
     
     playlist = pd.DataFrame()
@@ -74,6 +73,7 @@ def generate_playlist_df(spotify_data,playlist_id=None):
 
     return playlist ,sp
 
+#function to generate vector from playlist
 def generate_playlist_vector(spotify_features, playlist_df, weight_factor):
     
     spotify_features_playlist = spotify_features[spotify_features['track_id'].isin(playlist_df['track_id'].values)]
@@ -103,6 +103,8 @@ def generate_playlist_vector(spotify_features, playlist_df, weight_factor):
     return playlist_feature_set_weighted_final.sum(axis = 0), spotify_features_nonplaylist
 
 
+
+#function to generate recommendations
 def generate_recommendation(spotify_data, playlist_vector, nonplaylist_df, num_recommendations,sp):
 
     non_playlist = spotify_data[spotify_data['track_id'].isin(nonplaylist_df['track_id'].values)]

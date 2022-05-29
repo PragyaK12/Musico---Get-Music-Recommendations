@@ -17,7 +17,7 @@ genres = ['Movie', 'R&B', 'A Capella', 'Alternative', 'Country', 'Dance',
 
 audio_features = ["acousticness", "danceability", "energy", "instrumentalness", "valence", "tempo"]
 
-df = df = pd.read_csv("SpotifyFeatures.csv")
+df = df = pd.read_csv("data/SpotifyFeatures.csv")
 
 def getNearestNeighbours(genre,test_feat,num_recommendations):
 
